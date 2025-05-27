@@ -4,7 +4,7 @@ Uses **signal-cli-rest-api** and an OpenAI chat compatible endpoint. Tested with
 Supports sending **images** if using a multimodal language model. <br><br>
 **Really long conversations with memory enabled may cause OOMs or slowdowns.** <br>
 To fix it just delete, edit or move files/memory/SIGNAL_USER_memory.json. Or send /reset.<br><br>
-Memory file for each signal user is saved in ./files/memory/SIGNAL_USER_memory.json <br>
+System prompt and memory for each signal user is saved in ./files/memory/SIGNAL_USER_memory.json <br>
 Attachments are saved in ./files/attachments/SIGNAL_USER/<br><br>
 The LLM API key can be set as an environment variable.<br>
 ```shell
