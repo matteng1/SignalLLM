@@ -287,22 +287,23 @@ def register_command(command: str, handler: Callable[[], Awaitable[None]]) -> No
 
 # TODO: Moore error handling.
 async def handle_command(text: str, recipient: str = None) -> bool:
-    cmd = text.split()
-    if cmd[0] in COMMANDS:
-        try:
-            # Pass recipient and, if applicable, command parameter(s) to command if it accepts it
-            import inspect
-            sig = inspect.signature(COMMANDS[cmd[0]])
-            if {"recipient", "prompt"}.issubset(sig.parameters):
-                if len(cmd) > 1:
-                    await COMMANDS[cmd[0]](recipient, " ".join(cmd[1:]))
-            elif 'recipient' in sig.parameters:
-                await COMMANDS[cmd[0]](recipient)
-            else:
-                await COMMANDS[cmd[0]]()
-            return True
-        except Exception as e:
-            logger.error(f"Command error: {e}")
+    if text:
+        cmd = text.split()
+        if cmd[0] in COMMANDS:
+            try:
+                # Pass recipient and, if applicable, command parameter(s) to command if it accepts it
+                import inspect
+                sig = inspect.signature(COMMANDS[cmd[0]])
+                if {"recipient", "prompt"}.issubset(sig.parameters):
+                    if len(cmd) > 1:
+                        await COMMANDS[cmd[0]](recipient, " ".join(cmd[1:]))
+                elif 'recipient' in sig.parameters:
+                    await COMMANDS[cmd[0]](recipient)
+                else:
+                    await COMMANDS[cmd[0]]()
+                return True
+            except Exception as e:
+                logger.error(f"Command error: {e}")
     return False
 
 
@@ -488,7 +489,7 @@ async def main(llm_api_key: str = None):
         os.makedirs("files/memory", exist_ok=True)
         os.makedirs("files/attachments", exist_ok=True)
         
-        # Register commands
+        # Register reset command
         register_command("/reset", reset_memory_command)
         register_command("/prompt", set_system_prompt_command)
         
