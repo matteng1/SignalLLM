@@ -489,7 +489,7 @@ async def main(llm_api_key: str = None):
         os.makedirs("files/memory", exist_ok=True)
         os.makedirs("files/attachments", exist_ok=True)
         
-        # Register reset command
+        # Register commands
         register_command("/reset", reset_memory_command)
         register_command("/prompt", set_system_prompt_command)
         
