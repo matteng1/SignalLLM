@@ -34,7 +34,7 @@ cd SignalLLM
     "llm_service_provider": "openai",            // Works with llama.cpp-server and ollama
     "llm_service_url": "http://localhost:11434", // Port 11434 for ollama. 8080 for llamacpp
     "llm_api_key": "",                           // API key.
-    "llm_model_options": {"system_prompt": "","model":"gemma3:12b","keep_alive": 30}, // See below
+    "llm_model_options": {"system_prompt": "","model":"gemma3:12b","keep_alive": 30} // See below
 }
 ```
 #### llm_model_options:
