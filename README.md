@@ -1,5 +1,5 @@
 # SignalLLM
-Python app for sending messages to a large language model using the Signal messaging app.<br>
+Multi user python app for sending messages to a large language model using the Signal messaging app.<br>
 Uses **signal-cli-rest-api** and an OpenAI chat compatible endpoint. Tested with **Ollama** and **llama.cpp-server**. <br>
 Supports sending **images** if using a multimodal language model. <br><br>
 **Really long conversations with memory enabled may cause OOMs or slowdowns.** <br>
