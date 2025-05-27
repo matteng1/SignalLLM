@@ -7,5 +7,5 @@
     "llm_service_provider": "openai",
     "llm_service_url": "http://localhost:11434",
     "llm_api_key": "",
-    "llm_model_options": {"system_prompt": "You are a helpful assistant.", "model": "gemma3:12b", "keep_alive": 5},
+    "llm_model_options": {"system_prompt": "You are a helpful assistant.", "model": "gemma3:12b", "keep_alive": 5}
 }
