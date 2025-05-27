@@ -1,0 +1,11 @@
+{
+    "signal_service": "127.0.0.1:9922",
+    "phone_number": "+1234567890",
+    "has_memory": true,
+    "save_memory": true,
+    "save_attachments": true,
+    "llm_service_provider": "openai",
+    "llm_service_url": "http://localhost:11434",
+    "llm_api_key": "",
+    "llm_model_options": {"system_prompt": "You are a helpful assistant.", "model": "gemma3:12b", "keep_alive": 5},
+}
