@@ -47,7 +47,7 @@ cd SignalLLM
 python3 signal_llm.py
 ```
 ## User commands
-* **/reset**                           -    Reset memory for the sending user. Keep system prompt
-* **/prompt You are a happy robot**    -    Change system prompt to "You are a happy robot" for the specific user. <br>
-**Note: the message history is still saved. The model will most likely continue in the current persona if /reset is not sent afterwards.**
+* **/reset**<br>-    Reset memory for the sending user. Keep system prompt
+* **/prompt You are a happy robot**<br>-    Change system prompt to "You are a happy robot" for the specific user. <br>
+**Note: The message history is still saved. The model will most likely continue in the current persona if /reset is not sent afterwards.**
 <br><br><br>
