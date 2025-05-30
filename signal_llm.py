@@ -10,6 +10,7 @@ import traceback
 import os
 from typing import Dict, Any, List, Optional, Callable, Awaitable
 import importlib
+import io
 import logging
 import aiohttp
 import aiofiles
@@ -159,7 +160,6 @@ def get_llm_provider(provider_name: str, service_url: str, model_options: Dict[s
         logger.error(f"Failed to load LLM provider '{provider_name}': {e}")
         return None
 
-
 def prepare_llm_payload(memory: List[Dict], attachments: List[Dict] = None) -> Dict:
     return LLM_PROVIDER.prepare_payload(memory, attachments)
 
@@ -285,7 +285,7 @@ def register_command(command: str, handler: Callable[[], Awaitable[None]]) -> No
     COMMANDS[command] = handler
     logger.info(f"Registered command: {command}")
 
-# TODO: Moore error handling.
+# TODO: Moore
 async def handle_command(text: str, recipient: str = None) -> bool:
     if text:
         cmd = text.split()
@@ -378,6 +378,24 @@ async def process_attachments(recipient: str, attachments_data: List[Dict]) -> L
     return processed
 
 
+async def get_whisper_transcription(attachment: Dict) -> Optional[str]:
+    try:
+        binary_data = base64.b64decode(attachment["data"])
+        f_mem = io.BytesIO(binary_data)
+        f_mem.name = attachment.get("id", "audio.aac")
+        form_data = aiohttp.FormData()
+        form_data.add_field("file", f_mem)
+        form_data.add_field("temperature", "0.0")
+        form_data.add_field("temperature_inc", "0.2")
+        form_data.add_field("response_format", "json")
+      
+        url = f"http://{CONFIG['stt_service_url']}/inference"
+        response = await post_form(url, form_data)
+        return response.get("text") if response else None
+    except Exception as e:
+        logger.error(f"Error getting whisper transcription: {e}")
+        return None
+
 async def send_signal_message(recipient: str, text: str, attachments: List[Dict] = None) -> None:
     url = f"http://{CONFIG['signal_service']}/v2/send"
     payload = {
@@ -419,7 +437,10 @@ async def handle_signal_message(raw_message: str) -> None:
             attachments = []
             if "attachments" in message:
                 attachments = await process_attachments(recipient, message["attachments"])
-            
+            # Handle audio if whisper server is configured
+            if CONFIG["stt_service_url"] and attachments and len(attachments) == 1 and "audio" in attachments[0].get("content_type", ""):
+                text = await get_whisper_transcription(attachments[0])
+                text = text.strip()
             # Get LLM response
             response = await call_llm(recipient, text, attachments)
             
