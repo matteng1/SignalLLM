@@ -31,8 +31,7 @@ cd SignalLLM
 {
     "signal_service": "127.0.0.1:9922",          // signal-cli-rest-api endpoint
     "phone_number": "+12345678910",              // Number of the linked Signal account
-    "has_memory": true,                          // Remember previous messages
-    "save_memory": true,                         // Continue conversation at a later run
+    "save_memory": true,                         // Conversation has memory and is saved
     "save_attachments": true,                    // Save received attachments
     "llm_service_provider": "openai",            // Works with llama.cpp-server and ollama
     "llm_service_url": "http://localhost:11434", // Port 11434 for ollama. 8080 for llamacpp
