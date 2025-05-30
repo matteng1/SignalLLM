@@ -1,8 +1,9 @@
 # SignalLLM
 Multi user python app for sending messages to a large language model using the Signal messaging app.<br>
-Uses **signal-cli-rest-api** and an OpenAI chat compatible endpoint. Tested with **Ollama** and **llama.cpp-server**. <br>
+Uses **signal-cli-rest-api** and an OpenAI chat compatible endpoint. Tested with **Ollama** and **llama.cpp-server**. <br><br>
+
 Supports sending **images** if using a multimodal language model. <br>
-Supports **STT** if whisper server is running and configured. <br>
+Supports **STT** if a whisper server is running and configured. <br>
 (Send a voice message with signal and the LLM will respond with text. If instructed the LLM may provide transcriptions, translations and so on)<br><br>
 **Really long conversations with memory enabled may cause OOMs or slowdowns.** <br>
 To fix it just delete, edit or move files/memory/SIGNAL_USER_memory.json. Or send /reset.<br><br>
