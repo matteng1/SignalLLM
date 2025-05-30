@@ -98,4 +98,41 @@ cmake --build llama.cpp/build --config Release -j --clean-first
     --top-k 64 \
     --top-p 0.95
 ```
-***For more or better instructions go to https://github.com/ggml-org/llama.cpp/tree/master***
+***For more or better instructions go to [https://github.com/ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp)***
+
+# whisper.cpp-server - for STT
+* Prerequisites for FFMPEG-build (Neededish for transcription of Signal audio format)
+```shell
+# Debian/Ubuntu
+sudo apt install libavcodec-dev libavformat-dev libavutil-dev
+
+# RHEL/Fedora
+sudo dnf install libavcodec-free-devel libavformat-free-devel libavutil-free-devel
+```
+* Clone whisper repo and enter directory
+```shell
+git clone https://github.com/ggml-org/whisper.cpp.git
+cd whisper.cpp
+```
+* Compile with Nvidia GPU and FFMPEG support (recommended)
+```shell
+cmake -B build -DGGML_CUDA=1 -D WHISPER_FFMPEG=yes
+cmake --build build -j --config Release
+```
+* Compile **without** Nvidia GPU (much slower) and FFMPEG support.
+```shell
+cmake -B build -D WHISPER_FFMPEG=yes
+cmake --build build -j --config Release
+```
+
+* **Download preferred whisper model to models/ folder**
+```shell
+# Suitable model depends on preferred language, quality and so on. See link below for more information.
+```
+* Run server (from whisper.cpp folder). **Note port 8088**
+```shell
+# Settings: 8 threads, language EN, localhost, port 8088
+./build/bin/whisper-server -t 8 -l en -m ../models/PREFERRED_WHISPER_MODEL.bin --host 127.0.0.1 --port 8088 --convert
+```
+
+***For more or better instructions go to [https://github.com/ggml-org/whisper.cpp](https://github.com/ggml-org/whisper.cpp)***
