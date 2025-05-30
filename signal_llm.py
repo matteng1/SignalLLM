@@ -389,7 +389,7 @@ async def get_whisper_transcription(attachment: Dict) -> Optional[str]:
         form_data.add_field("temperature_inc", "0.2")
         form_data.add_field("response_format", "json")
       
-        url = f"http://{CONFIG['stt_service_url']}/inference"
+        url = f"{CONFIG['stt_service_url']}/inference"
         response = await post_form(url, form_data)
         return response.get("text") if response else None
     except Exception as e:
